@@ -1,8 +1,8 @@
 import discord
 from discord.ext import commands
-import json
-import os
+import requests
 import random
+import os
 
 # Fetch the token from environment variables
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -10,24 +10,27 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD_ID = '1362541680598716518'
 CHANNEL_ID = '1362557856590856214'
 
-file_path = "usernames_passwords.json"
-
+# API endpoint URL (ngrok URL)
+api_url = "http://abcd1234.ngrok.io/get_usernames"  # Replace with your actual ngrok URL
 
 # Set up intents, ensuring the message_content intent is enabled
 intents = discord.Intents.default()
 intents.message_content = True  # This enables the message content intent
 bot = commands.Bot(command_prefix='/', intents=intents)
 
-def read_json_data(file_path):
-    if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
-        with open(file_path, 'r') as f:
-            data = json.load(f)
-        return data
-    return []
+# Function to fetch usernames from local API
+def get_usernames_from_local_api():
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Error fetching usernames:", response.status_code)
+        return []
 
 @bot.command(name='generate')
 async def generate(ctx):
-    data = read_json_data(file_path)
+    # Fetch usernames from the API
+    data = get_usernames_from_local_api()
 
     if not data:
         await ctx.send("No available usernames and passwords found.")
