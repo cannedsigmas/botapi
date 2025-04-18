@@ -11,7 +11,7 @@ GUILD_ID = '1362541680598716518'
 CHANNEL_ID = '1362557856590856214'
 
 # API endpoint URL (ngrok URL)
-api_url = "http://abcd1234.ngrok.io/get_usernames"  # Replace with your actual ngrok URL
+api_url = "https://fcdc-71-210-135-30.ngrok-free.app "  # Replace with your actual ngrok URL
 
 # Set up intents, ensuring the message_content intent is enabled
 intents = discord.Intents.default()
