@@ -10,7 +10,8 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD_ID = '1362541680598716518'
 CHANNEL_ID = '1362557856590856214'
 
-file_path = r"C:\Users\canne\OneDrive\Documents\usernamedatabase\usernames_passwords.json"
+file_path = "usernames_passwords.json"
+
 
 # Set up intents, ensuring the message_content intent is enabled
 intents = discord.Intents.default()
