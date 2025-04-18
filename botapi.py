@@ -4,7 +4,6 @@ import json
 import os
 import random
 
-TOKEN = 'MTM2MjczODIxNzc0MDQwMjgwOQ.GpqhIm.2shd9LkVKJLlS2J3VzBg5t3hSSsehBqjLf4lak'
 GUILD_ID = '1362541680598716518'
 CHANNEL_ID = '1362557856590856214'
 
