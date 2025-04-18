@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import random
+import requests
 import os
 
 # Fetch the token from environment variables
@@ -10,25 +11,27 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD_ID = '1362541680598716518'
 CHANNEL_ID = '1362557856590856214'
 
-file_path = r"C:\Users\canne\OneDrive\Documents\usernamedatabase\usernames_passwords.json"  # Path to your JSON file
+# API endpoint URL (ngrok URL for Flask API)
+api_url = "https://d439-71-210-135-30.ngrok-free.app/get_usernames"  # Replace with your actual ngrok URL
 
 # Set up intents, ensuring the message_content intent is enabled
 intents = discord.Intents.default()
 intents.message_content = True  # This enables the message content intent
 bot = commands.Bot(command_prefix='/', intents=intents)
 
-# Function to read JSON data from the file
-def read_json_data(file_path):
-    if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
-        with open(file_path, 'r') as f:
-            data = json.load(f)
-        return data
-    return []
+# Function to fetch usernames and passwords from the Flask API
+def get_usernames_from_api():
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        return response.json()  # Return the JSON data from the server
+    else:
+        print("Error fetching usernames:", response.status_code)
+        return []
 
 @bot.command(name='generate')
 async def generate(ctx):
-    # Fetch usernames and passwords from the local file
-    data = read_json_data(file_path)
+    # Fetch usernames and passwords from the Flask API
+    data = get_usernames_from_api()
 
     if not data:
         await ctx.send("No available usernames and passwords found.")
